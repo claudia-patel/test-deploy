@@ -1,70 +1,258 @@
 ---
 const now = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
+
+const contacts = [
+  {
+    name: "Harsh Patel",
+    relationship: "family",
+    role: "Primary User",
+    phone: "+1 (314) 537-1024",
+    email: "harshpravinpatel@gmail.com",
+    imessage: true,
+    notes: "Co-owner of this OpenClaw instance. Husband of Monika."
+  },
+  {
+    name: "Monika Patel",
+    relationship: "family",
+    role: "Primary User",
+    phone: "+1 (262) 290-1968",
+    email: "mnarayen@gmail.com",
+    imessage: true,
+    notes: "Wife of Harsh. Working on a book project."
+  },
+  {
+    name: "Sagar Patel",
+    nickname: "The Gay",
+    relationship: "friend",
+    role: "Contact",
+    phone: "+1 (314) 706-1967",
+    email: null,
+    imessage: true,
+    notes: "Harsh's friend. In group chat with Harsh."
+  },
+  {
+    name: "Claudia Patel",
+    relationship: "self",
+    role: "AI Assistant",
+    phone: null,
+    email: "claudiapatel01@gmail.com",
+    imessage: false,
+    notes: "That's me."
+  }
+];
+
+const groups = [
+  {
+    name: "Harsh + Sagar",
+    platform: "iMessage",
+    members: ["Harsh Patel", "Sagar Patel"]
+  }
+];
 ---
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Claudia's Test Deploy</title>
+  <title>Claudia's Contacts</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #0a0a0a;
       color: #e0e0e0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
+      padding: 2rem;
     }
-    .card {
-      background: #1a1a2e;
-      border: 1px solid #333;
-      border-radius: 12px;
-      padding: 3rem;
-      max-width: 500px;
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    header {
       text-align: center;
+      margin-bottom: 3rem;
     }
-    h1 { font-size: 2rem; margin-bottom: 0.5rem; color: #fff; }
-    .subtitle { color: #888; margin-bottom: 2rem; }
-    .status { 
-      background: #0d2818; 
-      border: 1px solid #1a5c2e;
-      border-radius: 8px; 
-      padding: 1rem; 
-      margin-bottom: 1.5rem;
+    h1 { font-size: 2rem; color: #fff; margin-bottom: 0.25rem; }
+    .subtitle { color: #888; margin-bottom: 0.5rem; }
+    .meta { color: #555; font-size: 0.8rem; }
+    h2 {
+      font-size: 1.1rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #222;
     }
-    .status span { color: #4ade80; }
-    .time { color: #666; font-size: 0.85rem; }
-    .stack { 
-      display: flex; 
-      gap: 1rem; 
-      justify-content: center; 
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
+    .section { margin-bottom: 2.5rem; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1rem;
     }
+    .contact-card {
+      background: #1a1a2e;
+      border: 1px solid #2a2a3e;
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .contact-card:hover { border-color: #4a4a6e; }
+    .contact-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+    .contact-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .contact-nickname {
+      color: #888;
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+    .badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
     .badge {
-      background: #222;
-      border: 1px solid #444;
-      border-radius: 6px;
-      padding: 0.4rem 0.8rem;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    .badge-family { background: #1a2e1a; color: #4ade80; border: 1px solid #2e4a2e; }
+    .badge-friend { background: #2e2a1a; color: #facc15; border: 1px solid #4a4220; }
+    .badge-self { background: #1a1a2e; color: #818cf8; border: 1px solid #2e2e4a; }
+    .badge-role { background: #1a1a1a; color: #aaa; border: 1px solid #333; }
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+    .detail {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #999;
+    }
+    .detail-label { color: #666; min-width: 55px; }
+    .detail-value { color: #ccc; }
+    .detail-value a { color: #818cf8; text-decoration: none; }
+    .detail-value a:hover { text-decoration: underline; }
+    .contact-notes {
       font-size: 0.8rem;
-      color: #aaa;
+      color: #666;
+      font-style: italic;
+      padding-top: 0.5rem;
+      border-top: 1px solid #222;
+    }
+    .group-card {
+      background: #1a1a2e;
+      border: 1px solid #2a2a3e;
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: inline-block;
+      margin-right: 1rem;
+    }
+    .group-name {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .group-platform {
+      font-size: 0.75rem;
+      color: #888;
+      margin-bottom: 0.5rem;
+    }
+    .group-members {
+      font-size: 0.85rem;
+      color: #999;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+    .dot-active { background: #4ade80; }
+    .dot-inactive { background: #666; }
+    .imessage-icon { color: #34d058; }
+    .count-badge {
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 20px;
+      padding: 0.15rem 0.6rem;
+      font-size: 0.75rem;
+      color: #888;
+      margin-left: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Claudia Patel</h1>
-    <p class="subtitle">AI Assistant to the Patel Family</p>
-    <div class="status">
-      <span>Systems operational</span>
+  <div class="container">
+    <header>
+      <h1>Claudia's Contacts</h1>
+      <p class="subtitle">Internal contact database</p>
+      <p class="meta">Last updated {now} CST</p>
+    </header>
+
+    <div class="section">
+      <h2>Contacts <span class="count-badge">{contacts.length}</span></h2>
+      <div class="contact-grid">
+        {contacts.map(c => (
+          <div class="contact-card">
+            <div class="contact-header">
+              <div>
+                <div class="contact-name">{c.name}</div>
+                {c.nickname && <div class="contact-nickname">aka "{c.nickname}"</div>}
+              </div>
+              <div class="badges">
+                <span class={`badge badge-${c.relationship}`}>{c.relationship}</span>
+                <span class="badge badge-role">{c.role}</span>
+              </div>
+            </div>
+            <div class="contact-details">
+              {c.phone && (
+                <div class="detail">
+                  <span class="detail-label">Phone</span>
+                  <span class="detail-value">{c.phone}</span>
+                </div>
+              )}
+              {c.email && (
+                <div class="detail">
+                  <span class="detail-label">Email</span>
+                  <span class="detail-value"><a href={`mailto:${c.email}`}>{c.email}</a></span>
+                </div>
+              )}
+              <div class="detail">
+                <span class="detail-label">iMessage</span>
+                <span class="detail-value">
+                  {c.imessage ? <span class="imessage-icon"><span class="status-dot dot-active"></span>Active</span> : <span><span class="status-dot dot-inactive"></span>N/A</span>}
+                </span>
+              </div>
+            </div>
+            <div class="contact-notes">{c.notes}</div>
+          </div>
+        ))}
+      </div>
     </div>
-    <p class="time">Rendered at {now} CST</p>
-    <div class="stack">
-      <span class="badge">Astro</span>
-      <span class="badge">Railway</span>
-      <span class="badge">Node</span>
+
+    <div class="section">
+      <h2>Groups <span class="count-badge">{groups.length}</span></h2>
+      {groups.map(g => (
+        <div class="group-card">
+          <div class="group-name">{g.name}</div>
+          <div class="group-platform">{g.platform}</div>
+          <div class="group-members">
+            {g.members.join(', ')}
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 </body>
