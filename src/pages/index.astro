@@ -1,53 +1,43 @@
 ---
 const now = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
 
-const contacts = [
-  {
-    name: "Harsh Patel",
-    relationship: "family",
-    role: "Primary User",
-    phone: "+1 (314) 537-1024",
-    email: "harshpravinpatel@gmail.com",
-    imessage: true,
-    notes: "Co-owner of this OpenClaw instance. Husband of Monika."
-  },
-  {
-    name: "Monika Patel",
-    relationship: "family",
-    role: "Primary User",
-    phone: "+1 (262) 290-1968",
-    email: "mnarayen@gmail.com",
-    imessage: true,
-    notes: "Wife of Harsh. Working on a book project."
-  },
-  {
-    name: "Sagar Patel",
-    nickname: "The Gay",
-    relationship: "friend",
-    role: "Contact",
-    phone: "+1 (314) 706-1967",
-    email: null,
-    imessage: true,
-    notes: "Harsh's friend. In group chat with Harsh."
-  },
-  {
-    name: "Claudia Patel",
-    relationship: "self",
-    role: "AI Assistant",
-    phone: null,
-    email: "claudiapatel01@gmail.com",
-    imessage: false,
-    notes: "That's me."
-  }
+const family = [
+  { name: "Harsh Patel", role: "Primary User", phone: "+1 (314) 537-1024", email: "harshpravinpatel@gmail.com", imessage: true, notes: "Husband of Monika. Investor/entrepreneur." },
+  { name: "Monika Patel", nickname: "Moni", role: "Primary User", phone: "+1 (262) 290-1968", email: "mnarayen@gmail.com", imessage: true, notes: "Wife of Harsh. Working on a book. Kids: Niam, Arlo, and one on the way." },
+  { name: "Pravin Patel", role: "Harsh's Father", email: "pravin53@gmail.com", notes: "" },
+  { name: "Meena Patel", nickname: "Mummy/Poornima", role: "Harsh's Mother", email: "meenappatel@gmail.com", notes: "Had knee surgery April 2025." },
+  { name: "Abhishek Patel", role: "Harsh's Brother", email: "abhishekppatel@gmail.com", notes: "Wife Richa. Baby born June 2025." },
+  { name: "Richa Thapliyal", role: "Abhishek's Wife", email: "richthapliyal@gmail.com", notes: "" },
+  { name: "Harish Narayen", role: "Monika's Family", email: "harish.narayen@gmail.com", notes: "" },
+  { name: "P. Narayen", role: "Monika's Family", email: "pnarayen@hotmail.com", notes: "" },
+  { name: "Vishesh Narayen", role: "Monika's Family", email: "vishesh.narayen@gmail.com", notes: "" },
+];
+
+const friends = [
+  { name: "Sagar Patel", nickname: "The Gay", phone: "+1 (314) 706-1967", imessage: true, notes: "Bachelor party in Portland April 2025." },
+  { name: "Sunny", phone: "+1 (309) 310-6165", imessage: true, notes: "" },
+  { name: "Joe Holberg", email: "holbergj@gmail.com", notes: "Soho House hangouts. Trips to Illinois." },
+  { name: "Tyler Lambe", email: "tyler.j.lambe@gmail.com", notes: "NYC dinners. FiDi coffee." },
+  { name: "Omar Mohamed", email: "omar@omohamed.com", notes: "NYC dinner at Shukette." },
+  { name: "Bret Kuhlman", email: "bret.kuhlman@gmail.com", notes: "Local. Coffee after dropoff." },
+  { name: "Shaan", email: "shahshaan@gmail.com", notes: "Visited STL Feb 2025." },
+  { name: "Patrick Eckelkamp", notes: "Nashville dude trip crew." },
+  { name: "Comeron Ghobadi", notes: "Nashville dude trip crew." },
+  { name: "Andy McNulty", notes: "Nashville dude trip crew." },
+  { name: "Gaurang Shastri", phone: "+1 (847) 971-0181", email: "gaurang.shastri@gmail.com", imessage: true, notes: "Family friend. Bi-monthly calls with Harsh." },
+  { name: "Sona Shastri", email: "sona.a.shastri@gmail.com", notes: "Family friend. Dance performances." },
+  { name: "Mila Shastri", email: "mila.a.shastri@gmail.com", notes: "Family friend. Dance performances." },
 ];
 
 const groups = [
-  {
-    name: "Harsh + Sagar",
-    platform: "iMessage",
-    members: ["Harsh Patel", "Sagar Patel"]
-  }
+  { name: "Harsh + Sagar", platform: "iMessage", members: ["Harsh Patel", "Sagar Patel"] },
+  { name: "Harsh + Sunny", platform: "iMessage", members: ["Harsh Patel", "Sunny"] },
+  { name: "Harsh + Monika", platform: "iMessage", members: ["Harsh Patel", "Monika Patel"] },
 ];
+
+function renderCard(c: any) {
+  return c;
+}
 ---
 <html lang="en">
 <head>
@@ -61,198 +51,108 @@ const groups = [
       background: #0a0a0a;
       color: #e0e0e0;
       min-height: 100vh;
-      padding: 2rem;
+      padding: 2rem 1rem;
     }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    h1 { font-size: 2rem; color: #fff; margin-bottom: 0.25rem; }
-    .subtitle { color: #888; margin-bottom: 0.5rem; }
-    .meta { color: #555; font-size: 0.8rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 2.5rem; }
+    h1 { font-size: 1.8rem; color: #fff; margin-bottom: 0.25rem; }
+    .subtitle { color: #666; font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .meta { color: #444; font-size: 0.75rem; }
     h2 {
-      font-size: 1.1rem;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid #222;
+      font-size: 0.9rem; color: #888; text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 1rem;
+      padding-bottom: 0.5rem; border-bottom: 1px solid #1a1a1a;
     }
     .section { margin-bottom: 2.5rem; }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 1rem;
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 0.75rem; }
+    .card {
+      background: #111; border: 1px solid #1e1e1e; border-radius: 8px;
+      padding: 1rem 1.15rem; transition: border-color 0.2s;
     }
-    .contact-card {
-      background: #1a1a2e;
-      border: 1px solid #2a2a3e;
-      border-radius: 10px;
-      padding: 1.25rem;
-      transition: border-color 0.2s;
+    .card:hover { border-color: #333; }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+    .name { font-size: 1rem; font-weight: 600; color: #fff; }
+    .nick { color: #666; font-size: 0.8rem; font-style: italic; }
+    .role { font-size: 0.65rem; color: #888; background: #1a1a1a; border: 1px solid #222; border-radius: 3px; padding: 0.15rem 0.4rem; }
+    .details { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.8rem; color: #777; }
+    .details a { color: #6366f1; text-decoration: none; }
+    .details a:hover { text-decoration: underline; }
+    .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+    .dot-on { background: #4ade80; }
+    .note { font-size: 0.75rem; color: #555; margin-top: 0.4rem; font-style: italic; }
+    .count { color: #555; font-size: 0.75rem; font-weight: normal; margin-left: 0.4rem; }
+    .group-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .group-chip {
+      background: #111; border: 1px solid #1e1e1e; border-radius: 8px;
+      padding: 0.75rem 1rem; min-width: 200px;
     }
-    .contact-card:hover { border-color: #4a4a6e; }
-    .contact-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.75rem;
-    }
-    .contact-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #fff;
-    }
-    .contact-nickname {
-      color: #888;
-      font-size: 0.85rem;
-      font-style: italic;
-    }
-    .badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-    .badge {
-      font-size: 0.65rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 600;
-    }
-    .badge-family { background: #1a2e1a; color: #4ade80; border: 1px solid #2e4a2e; }
-    .badge-friend { background: #2e2a1a; color: #facc15; border: 1px solid #4a4220; }
-    .badge-self { background: #1a1a2e; color: #818cf8; border: 1px solid #2e2e4a; }
-    .badge-role { background: #1a1a1a; color: #aaa; border: 1px solid #333; }
-    .contact-details {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      font-size: 0.85rem;
-      margin-bottom: 0.75rem;
-    }
-    .detail {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #999;
-    }
-    .detail-label { color: #666; min-width: 55px; }
-    .detail-value { color: #ccc; }
-    .detail-value a { color: #818cf8; text-decoration: none; }
-    .detail-value a:hover { text-decoration: underline; }
-    .contact-notes {
-      font-size: 0.8rem;
-      color: #666;
-      font-style: italic;
-      padding-top: 0.5rem;
-      border-top: 1px solid #222;
-    }
-    .group-card {
-      background: #1a1a2e;
-      border: 1px solid #2a2a3e;
-      border-radius: 10px;
-      padding: 1.25rem;
-      display: inline-block;
-      margin-right: 1rem;
-    }
-    .group-name {
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 0.5rem;
-    }
-    .group-platform {
-      font-size: 0.75rem;
-      color: #888;
-      margin-bottom: 0.5rem;
-    }
-    .group-members {
-      font-size: 0.85rem;
-      color: #999;
-    }
-    .status-dot {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      margin-right: 4px;
-    }
-    .dot-active { background: #4ade80; }
-    .dot-inactive { background: #666; }
-    .imessage-icon { color: #34d058; }
-    .count-badge {
-      background: #222;
-      border: 1px solid #333;
-      border-radius: 20px;
-      padding: 0.15rem 0.6rem;
-      font-size: 0.75rem;
-      color: #888;
-      margin-left: 0.5rem;
-    }
+    .group-name { font-weight: 600; color: #fff; font-size: 0.9rem; }
+    .group-plat { font-size: 0.7rem; color: #666; margin-bottom: 0.3rem; }
+    .group-members { font-size: 0.8rem; color: #888; }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>Claudia's Contacts</h1>
-      <p class="subtitle">Internal contact database</p>
-      <p class="meta">Last updated {now} CST</p>
+      <p class="subtitle">Patel Family Directory</p>
+      <p class="meta">Updated {now}</p>
     </header>
 
     <div class="section">
-      <h2>Contacts <span class="count-badge">{contacts.length}</span></h2>
+      <h2>Family <span class="count">{family.length}</span></h2>
       <div class="contact-grid">
-        {contacts.map(c => (
-          <div class="contact-card">
-            <div class="contact-header">
+        {family.map(c => (
+          <div class="card">
+            <div class="card-top">
               <div>
-                <div class="contact-name">{c.name}</div>
-                {c.nickname && <div class="contact-nickname">aka "{c.nickname}"</div>}
+                <span class="name">{c.name}</span>
+                {c.nickname && <span class="nick"> "{c.nickname}"</span>}
               </div>
-              <div class="badges">
-                <span class={`badge badge-${c.relationship}`}>{c.relationship}</span>
-                <span class="badge badge-role">{c.role}</span>
-              </div>
+              <span class="role">{c.role}</span>
             </div>
-            <div class="contact-details">
-              {c.phone && (
-                <div class="detail">
-                  <span class="detail-label">Phone</span>
-                  <span class="detail-value">{c.phone}</span>
-                </div>
-              )}
-              {c.email && (
-                <div class="detail">
-                  <span class="detail-label">Email</span>
-                  <span class="detail-value"><a href={`mailto:${c.email}`}>{c.email}</a></span>
-                </div>
-              )}
-              <div class="detail">
-                <span class="detail-label">iMessage</span>
-                <span class="detail-value">
-                  {c.imessage ? <span class="imessage-icon"><span class="status-dot dot-active"></span>Active</span> : <span><span class="status-dot dot-inactive"></span>N/A</span>}
-                </span>
-              </div>
+            <div class="details">
+              {c.phone && <div><span class="dot dot-on"></span>{c.phone}</div>}
+              {c.email && <div><a href={`mailto:${c.email}`}>{c.email}</a></div>}
             </div>
-            <div class="contact-notes">{c.notes}</div>
+            {c.notes && <div class="note">{c.notes}</div>}
           </div>
         ))}
       </div>
     </div>
 
     <div class="section">
-      <h2>Groups <span class="count-badge">{groups.length}</span></h2>
-      {groups.map(g => (
-        <div class="group-card">
-          <div class="group-name">{g.name}</div>
-          <div class="group-platform">{g.platform}</div>
-          <div class="group-members">
-            {g.members.join(', ')}
+      <h2>Friends <span class="count">{friends.length}</span></h2>
+      <div class="contact-grid">
+        {friends.map(c => (
+          <div class="card">
+            <div class="card-top">
+              <div>
+                <span class="name">{c.name}</span>
+                {c.nickname && <span class="nick"> "{c.nickname}"</span>}
+              </div>
+            </div>
+            <div class="details">
+              {c.phone && <div><span class="dot dot-on"></span>{c.phone}</div>}
+              {c.email && <div><a href={`mailto:${c.email}`}>{c.email}</a></div>}
+            </div>
+            {c.notes && <div class="note">{c.notes}</div>}
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Groups <span class="count">{groups.length}</span></h2>
+      <div class="group-row">
+        {groups.map(g => (
+          <div class="group-chip">
+            <div class="group-name">{g.name}</div>
+            <div class="group-plat">{g.platform}</div>
+            <div class="group-members">{g.members.join(', ')}</div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </body>
